@@ -2,12 +2,14 @@ package play.exercism;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Series {
 
     private String series;
     public static void main(String[] args) {
-//        Series  series3 = new Series("123456");
+        Series  series3 = new Series("123456");
 //        Series  series4 = new Series("123456");
 //        series3.slices(3).forEach(System.out::println);
 //        series4.slices(4).forEach(System.out::println);
@@ -20,9 +22,10 @@ public class Series {
 
 //        Series series = new Series("12345");
 //        series.slices(6).forEach(System.out::println);
+//        Series empty = new Series("");
+        series3.stream(3).forEach(System.out::println);
 
-        Series empty = new Series("");
-        empty.slices(1).forEach(System.out::println);
+//        empty.slices(1).forEach(System.out::println);
     }
 
     public Series(String series) {
@@ -46,4 +49,19 @@ public class Series {
         }
         return splittedList;
     }
+
+    //Solution by charles-wangkai
+    public List<String> stream(int length) {
+        if (length<1) {
+            throw new IllegalArgumentException("Slice size is too small.");
+        }
+        if (length>series.length()){
+            throw new IllegalArgumentException("Slice size is too big.");
+        }
+        return IntStream
+                .rangeClosed(0, series.length() - length)
+                .mapToObj(i -> series.substring(i, i + length))
+                .collect(Collectors.toList());
+    }
+
 }
